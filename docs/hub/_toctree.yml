@@ -1,0 +1,29 @@
+- title: Getting started
+  sections:
+    - local: index
+      title: MEGA Documentation
+    - local: quickstart
+      title: Quickstart
+
+- title: Repositories
+  sections:
+    - local: authentication
+      title: Authentication
+    - local: repositories
+      title: Hub Repositories
+    - local: webhooks
+      title: Webhooks
+
+- title: Compute
+  sections:
+    - local: spaces
+      title: Spaces
+    - local: jobs
+      title: Jobs
+
+- title: Usage and safety
+  sections:
+    - local: rate-limits
+      title: Rate limits
+    - local: trust
+      title: Signing and Trust
