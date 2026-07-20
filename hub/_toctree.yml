@@ -1,0 +1,257 @@
+- title: Getting started
+  sections:
+    - local: index
+      title: MEGA Documentation
+    - local: quickstart
+      title: Quickstart
+    - local: hugging-face-compatibility
+      title: Hugging Face Compatibility
+    - local: resource-protocol
+      title: Integrations
+
+- title: Repositories
+  sections:
+    - local: repositories
+      title: Hub Repositories
+    - local: repository-settings
+      title: Repository Settings
+    - local: repository-cards
+      title: Repository Cards
+    - local: repositories-licenses
+      title: Repository Licenses
+    - local: gated-repositories
+      title: Gated Repositories
+    - local: large-files
+      title: Large Files
+    - local: storage-limits
+      title: Storage Limits
+    - local: local-cache
+      title: Local Cache
+    - local: repositories-ci
+      title: Continuous Integration
+    - local: discussions
+      title: Discussions and Pull Requests
+    - local: notifications
+      title: Notifications
+    - local: webhooks
+      title: Webhooks
+    - local: repositories-next-steps
+      title: Repository Next Steps
+    - local: notebooks
+      title: Notebooks
+
+- title: Models
+  sections:
+    - local: models
+      title: Model Repositories
+    - local: model-cards
+      title: Model Cards
+    - local: models-uploading
+      title: Uploading Models
+    - local: models-downloading
+      title: Downloading Models
+    - local: models-libraries
+      title: Model Libraries
+    - local: model-evaluations
+      title: Model Evaluations
+    - local: model-release-checklist
+      title: Model Release Checklist
+    - local: models-faq
+      title: Model FAQ
+    - local: model-hardware
+      title: Model Hardware
+    - local: model-tasks
+      title: Model Tasks
+    - local: model-widgets
+      title: Model Widgets
+    - local: gguf
+      title: GGUF Models
+    - local: trust
+      title: Signing and Trust
+
+- title: Datasets
+  sections:
+    - local: datasets
+      title: Dataset Repositories
+    - local: datasets-overview
+      title: Datasets Overview
+    - local: datasets-cards
+      title: Dataset Cards
+    - local: datasets-uploading
+      title: Uploading Datasets
+    - local: datasets-downloading
+      title: Downloading Datasets
+    - local: datasets-streaming
+      title: Streaming Datasets
+    - local: datasets-data-files
+      title: Dataset File Organization
+    - local: datasets-ingesting
+      title: Ingesting Datasets
+    - local: datasets-libraries
+      title: Dataset Libraries
+    - local: datasets-viewer
+      title: Dataset Viewing
+    - local: datasets-sql-console
+      title: Dataset SQL Console
+    - local: datasets-data-studio
+      title: Data Studio
+    - local: datasets-media
+      title: Image, Audio, and Video Datasets
+
+- title: Spaces
+  sections:
+    - local: spaces
+      title: Spaces
+    - local: spaces-config-reference
+      title: Spaces Configuration Reference
+    - local: spaces-dependencies
+      title: Spaces Dependencies
+    - local: spaces-settings
+      title: Space Settings
+    - local: spaces-hardware
+      title: Space Hardware
+    - local: spaces-zerogpu
+      title: ZeroGPU Spaces
+    - local: spaces-dev-mode
+      title: Space Dev Mode
+    - local: spaces-storage
+      title: Space Storage
+    - local: spaces-api-endpoints
+      title: Spaces API Endpoints
+    - local: spaces-sdk-gradio
+      title: Gradio Spaces
+    - local: spaces-sdk-streamlit
+      title: Streamlit Spaces
+    - local: spaces-sdk-static
+      title: Static Spaces
+    - local: spaces-sdk-docker
+      title: Docker Spaces
+    - local: spaces-sdk-jupyter
+      title: Jupyter Notebook Spaces
+    - local: spaces-embed
+      title: Embed a Space
+    - local: spaces-custom-domain
+      title: Space Custom Domains
+    - local: spaces-mcp-servers
+      title: Spaces and MCP
+    - local: spaces-agents
+      title: Spaces as Agent Tools
+    - local: spaces-oauth
+      title: Authentication in Spaces
+
+- title: Storage
+  sections:
+    - local: storage-buckets
+      title: Storage Buckets
+    - local: storage-buckets-access
+      title: Bucket Access Patterns
+    - local: storage-buckets-s3
+      title: Bucket S3 Gateway
+    - local: storage-buckets-integrations
+      title: Bucket Integrations
+    - local: storage-buckets-security
+      title: Bucket Security
+
+- title: Subscriptions and plans
+  sections:
+    - local: subscriptions-and-plans
+      title: Subscriptions and Plans
+    - local: pro-plan
+      title: PRO Plan
+    - local: team-and-enterprise-plans
+      title: Team and Enterprise Plans
+    - local: billing
+      title: Billing
+
+- title: Compute
+  sections:
+    - local: jobs
+      title: Jobs
+    - local: jobs-overview
+      title: Jobs Overview
+    - local: jobs-quickstart
+      title: Jobs Quickstart
+    - local: jobs-configuration
+      title: Job Configuration
+    - local: jobs-manage
+      title: Manage Jobs
+    - local: jobs-schedule
+      title: Schedule Jobs
+    - local: jobs-webhooks
+      title: Job Webhook Automation
+    - local: sandboxes
+      title: Sandboxes
+    - local: jobs-examples
+      title: Job Examples
+    - local: jobs-serving
+      title: Serving Models
+    - local: jobs-reference
+      title: Jobs Reference
+
+- title: Community
+  sections:
+    - local: discovery
+      title: Search and Discovery
+    - local: collections
+      title: Collections
+    - local: papers
+      title: Paper Pages
+    - local: moderation
+      title: Community Moderation
+
+- title: Organizations and security
+  sections:
+    - local: organizations
+      title: Organizations
+    - local: audit-logs
+      title: Audit Logs
+    - local: organization-storage-regions
+      title: Organization Storage Regions
+    - local: organization-sso
+      title: Organization Single Sign-On
+    - local: scim
+      title: SCIM Provisioning
+    - local: service-accounts
+      title: Service Accounts
+    - local: oauth-applications
+      title: OAuth Applications
+    - local: authentication
+      title: Authentication
+    - local: access-tokens
+      title: Access Tokens
+    - local: passkeys
+      title: Passkeys
+    - local: two-factor-authentication
+      title: Two-Factor Authentication
+    - local: security
+      title: Account Security
+    - local: trusted-publishers
+      title: Trusted Publishers
+    - local: resource-groups
+      title: Resource Groups
+    - local: organization-network-security
+      title: Organization Network Security
+    - local: publisher-analytics
+      title: Publisher Analytics
+    - local: organization-cards
+      title: Organization Cards
+    - local: content-preferences
+      title: Content Preferences
+    - local: account-deletion
+      title: Delete Your Account
+
+- title: APIs and AI integrations
+  sections:
+    - local: api
+      title: Hub API
+    - local: sdk
+      title: Python SDK
+    - local: rate-limits
+      title: Rate Limits
+    - local: mcp
+      title: MCP Server
+
+- title: Help and reference
+  sections:
+    - local: deployment
+      title: Service status and support

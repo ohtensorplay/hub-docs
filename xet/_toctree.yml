@@ -1,0 +1,22 @@
+- title: Get started
+  sections:
+    - local: index
+      title: Xet
+    - local: overview
+      title: Xet Storage Overview
+
+- title: Use Xet
+  sections:
+    - local: using-xet-storage
+      title: Use Xet Storage
+    - local: git-lfs-compatibility
+      title: Git LFS Compatibility
+    - local: deduplication
+      title: Deduplication
+
+- title: Help
+  sections:
+    - local: security
+      title: Xet Security
+    - local: troubleshooting
+      title: Xet Troubleshooting

@@ -1,0 +1,43 @@
+- title: Get started
+  sections:
+    - local: index
+      title: Inference Providers
+    - local: guides/first-api-call
+      title: Your First Inference Provider Call
+    - local: model-catalog
+      title: Model Catalog
+
+- title: Routing & billing
+  sections:
+    - local: routing
+      title: Routing and Provider Selection
+    - local: pricing-and-billing
+      title: Pricing and Billing
+    - local: custom-provider-keys
+      title: Custom Provider Keys
+    - local: organization-billing
+      title: Organization Billing
+
+- title: Tasks
+  sections:
+    - local: tasks/chat-completions
+      title: Chat Completions
+    - local: tasks/responses
+      title: Responses API
+    - local: tasks/embeddings
+      title: Embeddings
+    - local: function-calling
+      title: Function Calling
+    - local: structured-output
+      title: Structured Output
+
+- title: Clients & operations
+  sections:
+    - local: guides/clients
+      title: Clients and SDKs
+    - local: api-reference
+      title: Router API Reference
+    - local: security
+      title: Security and Privacy
+    - local: troubleshooting
+      title: Troubleshooting

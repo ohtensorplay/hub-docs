@@ -1,0 +1,27 @@
+- title: Get started
+  sections:
+    - local: index
+      title: AI Native
+    - local: install
+      title: Install the MEGA Codex Plugin
+
+- title: Plugin and MCP
+  sections:
+    - local: using-the-plugin
+      title: Use the MEGA Codex Plugin
+    - local: mcp-workflows
+      title: MCP Workflows in Codex
+    - local: authorization
+      title: Authorize MEGA in Codex
+
+- title: Skills
+  sections:
+    - local: skills
+      title: MEGA Agent Skills
+    - local: skills-catalog
+      title: MEGA Skills Catalog
+
+- title: Help
+  sections:
+    - local: troubleshooting
+      title: AI Native Troubleshooting
