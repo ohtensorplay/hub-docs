@@ -30,7 +30,7 @@ All four surfaces use the same owner, state, timeout, and capability contract de
 | Ownership | Personal namespace or an organization administered by the caller |
 | Output | Retained logs plus a live CPU, memory, and network metrics stream |
 | Mounts | Read-only model, dataset, or Space mounts; Bucket mounts may be read-write |
-| Private access | Opt-in SSH for a `RUNNING` Job through the shared Access-protected ingress |
+| Private access | Opt-in SSH for a `RUNNING` Job through its authenticated SSH URL |
 | Not enabled | GPU, TPU, Space images, and exposed ports |
 
 Use `mega jobs hardware` or `GET /api/jobs/hardware` as the runtime source of truth. Unsupported capabilities return `422` instead of being silently ignored.
@@ -101,8 +101,8 @@ and detach have the same contract as `mega jobs run`.
 
 For interactive debugging, opt in when creating a long-running Job. SSH is
 private: register an account key first, wait for the Job to reach `RUNNING`,
-then connect through the same Cloudflare Access-protected ingress used by
-Space Dev Mode. No Job container port is exposed.
+then connect with the authenticated SSH URL returned for that Job. No Job
+container port is exposed.
 
 ```bash
 mega auth keys add ~/.ssh/id_ed25519.pub --name laptop
@@ -197,7 +197,8 @@ mega jobs cancel <job-id>
 
 Log tail accepts 1 through 5000 retained lines. `wait` returns a failing shell status for `CANCELED` and `ERROR`, which makes it safe for CI gates.
 
-`stats` forwards the Compute Pool SSE stream. It reports CPU, memory, and network usage for a running CPU Job; the GPU field is an empty object because no GPU Job flavor is enabled.
+`stats` reports CPU, memory, and network usage for a running CPU Job; the GPU
+field is an empty object because no GPU Job flavor is enabled.
 
 ## Job states
 

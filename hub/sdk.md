@@ -55,7 +55,7 @@ managed Inference Endpoint lifecycle product.
 
 Use the live hardware catalogue before dispatching a Job. The catalogue is the
 source of truth for CPU, RAM, accelerator, and price; an SDK never invents a
-GPU flavor that the current compute pool has not enabled.
+GPU flavor that is not currently available.
 
 ```python
 from megatensors.hub import MegaHubClient
@@ -74,12 +74,12 @@ final = client.wait_for_job(job.id, timeout=900)
 
 Jobs support dispatch, logs, cancellation, labels, schedules, mounted
 repositories or Buckets, and opt-in private SSH according to the current
-backend contract. `fetch_job_metrics` streams the compute pool's real CPU,
-memory, and network samples for a running Job. Create a long-running Job with `ssh=True`; while it is
+service contract. `fetch_job_metrics` streams CPU, memory, and network samples
+for a running Job. Create a long-running Job with `ssh=True`; while it is
 `RUNNING`, `job.status.ssh_url` is populated and the CLI can connect with
 `mega jobs ssh JOB_ID`. The connection requires a registered account SSH key,
-write ownership of the Job, and the shared Cloudflare Access ingress. MEGA does
-not provide Hugging Face's free-form Job `name` field.
+write ownership of the Job, and the authenticated SSH URL returned for that
+Job. MEGA does not provide Hugging Face's free-form Job `name` field.
 
 See [Jobs](/docs/hub/jobs), [Job Configuration](/docs/hub/jobs-configuration),
 and [Storage Buckets](/docs/hub/storage-buckets) for current limits and volume

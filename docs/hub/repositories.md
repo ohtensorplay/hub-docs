@@ -32,7 +32,8 @@ git commit -S -m "Publish signed release"
 git push origin main
 ```
 
-The gateway applies repository authorization, compare-and-swap reference updates, GPG verification, and durable bundle finalization before the Hub exposes the new revision. A rejected push does not partially advance the branch.
+MEGA validates repository authorization and commit integrity before publishing a
+new revision. A rejected push does not partially advance the branch.
 
 ## Create and inspect
 
