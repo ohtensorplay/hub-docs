@@ -3,6 +3,12 @@
 This repository contains the source pages for the public MEGA documentation at
 <https://mega.tensorplay.cn/docs/hub/index>.
 
+MEGA gives ML teams a single product surface for repositories, datasets,
+Spaces, inference, compute, and storage. Its public documentation is designed
+to make the common Hub-style workflows easy to adopt while documenting MEGA's
+own API contracts, limits, and security model. MEGA is an independent product;
+Hugging Face names and APIs are referenced only where compatibility matters.
+
 - `hub/` documents the MEGA Hub: repositories, community features, storage,
   compute, security, and public integrations.
 - `inference-providers/` documents the MEGA Inference Providers product.
