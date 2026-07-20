@@ -1,3 +1,10 @@
+<p align="center"><a href="https://mega.tensorplay.cn/"><img src="https://mega.tensorplay.cn/assets/logo-D1t6EjrA.webp" alt="MEGA" width="420" /></a></p>
+<p align="center"><i>Learn, build, and ship on the MEGA model platform.</i></p>
+<p align="center">
+  <a href="https://mega.tensorplay.cn/docs/hub/index"><img alt="Documentation" src="https://img.shields.io/website?url=https%3A%2F%2Fmega.tensorplay.cn%2Fdocs%2Fhub%2Findex&label=docs"></a>
+  <a href="https://github.com/ohtensorplay/hub-docs/blob/main/LICENSE"><img alt="MIT License" src="https://img.shields.io/github/license/ohtensorplay/hub-docs"></a>
+</p>
+
 # MEGA Documentation
 
 This repository contains the source pages for the public MEGA documentation at
