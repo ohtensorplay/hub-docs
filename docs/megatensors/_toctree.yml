@@ -1,0 +1,29 @@
+- title: Get started
+  sections:
+    - local: index
+      title: Tensor Runtime
+    - local: guides/cli
+      title: MEGA CLI Reference
+    - local: guides/conversion
+      title: Conversion
+
+- title: Hub client
+  sections:
+    - local: package_reference/hub_client
+      title: Hub Python SDK
+
+- title: Artifact format
+  sections:
+    - local: package_reference/format
+      title: Artifact Format
+    - local: package_reference/model_tokenizer
+      title: Model and Tokenizer
+
+- title: Runtime reference
+  sections:
+    - local: package_reference/backends
+      title: Backends
+    - local: package_reference/kv_cache
+      title: KV Cache Sidecars
+    - local: examples
+      title: Examples
