@@ -80,8 +80,8 @@ local CLI, Skill, or Plugin companion:
 
 ```bash
 mega mcp search judge
-mega mcp info mega/xpuoj --format json
-mega mcp install mega/xpuoj
+mega mcp info alice/my-tools --format json
+mega mcp install alice/my-tools
 ```
 
 Files install under `~/.local/share/mega/mcp/<namespace>/<name>` by default.

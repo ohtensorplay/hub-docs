@@ -52,9 +52,9 @@ runtime source is not part of this file tree.
 Install a listing's versioned companion snapshot with the MEGA CLI:
 
 ```bash
-mega mcp search xpuoj
-mega mcp info mega/xpuoj
-mega mcp install mega/xpuoj
+mega mcp search browser
+mega mcp info alice/my-tools
+mega mcp install alice/my-tools
 ```
 
 The same repository can be created and updated explicitly:
@@ -119,10 +119,3 @@ not forwarded to the publisher's runtime. Failed calls are refunded.
 
 The application inside the private Space does not implement MEGA account
 authentication. Hub is the public router and security boundary.
-
-## First MEGA listing: XPUOJ
-
-[`mega/xpuoj`](/mcps/mega/xpuoj) publishes its plugin README, CLI companion,
-Skill, manifest, and artwork together. A fixed MEGA Worker binding handles
-remote calls. Account-specific actions still need the local XPUOJ CLI or
-plugin and the user's existing browser sign-in.

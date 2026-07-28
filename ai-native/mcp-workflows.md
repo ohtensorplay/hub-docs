@@ -44,8 +44,8 @@ Marketplace MCPs may include a local companion. Install its versioned files
 without executing publisher code:
 
 ```bash
-mega mcp info mega/xpuoj
-mega mcp install mega/xpuoj
+mega mcp info alice/my-tools
+mega mcp install alice/my-tools
 ```
 
 Review its README before enabling it. Remote calls still use
