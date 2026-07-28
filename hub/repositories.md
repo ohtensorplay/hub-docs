@@ -1,7 +1,9 @@
 # Hub Repositories
 
 
-MEGA Hub repositories provide one revisioned storage model for `model`, `dataset`, and `space` content. Every file mutation creates an immutable commit, while branches and tags provide readable revision names.
+MEGA Hub repositories provide one revisioned storage model for `model`,
+`dataset`, `space`, and `mcp` content. Every file mutation creates an immutable
+commit, while branches and tags provide readable revision names.
 
 ## Repository identity
 
@@ -13,13 +15,15 @@ research/evaluation-corpus
 alice/demo-space
 ```
 
-Repository type is selected at creation and is one of `model`, `dataset`, or `space`. Visibility can be public or private.
+Repository type is selected at creation and is one of `model`, `dataset`,
+`space`, or `mcp`. Visibility can be public or private.
 
 Use the type-specific guides for recommended layouts and publication checks:
 
 - [Model Repositories](/docs/hub/models)
 - [Dataset Repositories](/docs/hub/datasets)
 - [Spaces](/docs/hub/spaces)
+- [MCP Marketplace](/docs/hub/mcps)
 - [Repository Cards](/docs/hub/repository-cards)
 
 ## Clone and push with Git
@@ -46,6 +50,7 @@ new revision. A rejected push does not partially advance the branch.
 
 ```bash
 mega repos create mega/qwen-release --type model --private
+mega repos create mega/search-tools --type mcp --private
 mega repos info mega/qwen-release
 mega repos list --owner mega --type model
 ```
@@ -93,7 +98,12 @@ mega cp mega://models/mega/source@main/config.json ./config.json
 mega cp ./README.md mega://models/mega/source@main/README.md
 ```
 
-Use `models`, `datasets`, or `spaces` in the URI authority to make the repository type explicit.
+Use `models`, `datasets`, `spaces`, or `mcps` to make the
+repository type explicit:
+
+```bash
+mega cp ./README.md mega://mcps/mega/search-tools@main/README.md
+```
 
 ## Branches, tags, and history
 
@@ -168,5 +178,8 @@ Use the [Python SDK](/docs/hub/sdk) for the typed method map and the live [OpenA
 - Use `--dry-run` and include/exclude filters before large downloads.
 - Keep repository type stable; create a separate repository when content semantics change.
 - Prefer `mega upload-large-folder` for large release trees; see [Xet](/docs/xet/index) for large-artifact guidance.
+- MCP repositories support the same native Xet upload, deduplication, download,
+  and maintenance paths as other repositories. Marketplace runtime CPU,
+  memory, request, and package limits remain independent of repository storage.
 - Require explicit confirmation for destructive branch, tag, file, and repository deletion.
 - Keep discovery metadata short and use `README.md` for detailed release context.

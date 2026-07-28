@@ -60,6 +60,10 @@ client.upload_file(
 )
 ```
 
+`repo_type` accepts `model`, `dataset`, `space`, or `mcp`. MCP repositories use
+the same metadata, files, revisions, Community methods, and native Xet
+transport; marketplace execution and billing remain separate Hub services.
+
 ## Job methods
 
 ```python

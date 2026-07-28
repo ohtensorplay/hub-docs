@@ -3,7 +3,7 @@
 MEGA has two separate MCP surfaces:
 
 - The free [official MCP Server](/docs/hub/mcp) is hosted by MEGA at `/mcp`.
-- The [MCP Marketplace](/docs/hub/mcp-marketplace) lets a publisher sell tool
+- The [MCP Marketplace](/docs/hub/mcps) lets a publisher sell tool
   calls from a public MCP repository backed by a managed private Space.
 
 A Space is never the marketplace page or public file repository. Marketplace

@@ -250,7 +250,7 @@
       title: Rate Limits
     - local: mcp
       title: MCP Server
-    - local: mcp-marketplace
+    - local: mcps
       title: MCP Marketplace
 
 - title: Help and reference

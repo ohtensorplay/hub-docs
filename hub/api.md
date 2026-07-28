@@ -48,13 +48,15 @@ The response status is `201` for a new repository. Use the returned repository a
 
 ## Repository paths and types
 
-All three repository types use the same API collection:
+All four repository types use the same API collection:
 
 ```text
 /api/repos/{owner}/{name}
 ```
 
-The `repo_type` field distinguishes `model`, `dataset`, and `space`. Browser presentation adds `/datasets/` or `/spaces/` prefixes, but those prefixes are not part of the canonical `/api/repos` identity.
+The `repo_type` field distinguishes `model`, `dataset`, `space`, and `mcp`.
+Browser presentation adds `/datasets/`, `/spaces/`, or `/mcps/` prefixes, but
+those prefixes are not part of the canonical `/api/repos` identity.
 
 Repository file reads resolve a branch, tag, or commit through:
 

@@ -3,7 +3,7 @@
 The official MEGA MCP server gives AI clients typed, bounded access to Hub resources through the focused HF-style Version 1 contract.
 
 The official MEGA tools are free. The same server is also the single
-authenticated gateway to the [MCP Marketplace](/docs/hub/mcp-marketplace);
+authenticated gateway to the [MCP Marketplace](/docs/hub/mcps);
 only an explicit, successful `mcp_market_call` can spend Mega Coins.
 
 ## Endpoint and transport

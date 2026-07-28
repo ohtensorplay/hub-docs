@@ -13,12 +13,12 @@ all clients invoke marketplace tools through the
 | Surface | URL |
 | --- | --- |
 | Official MEGA MCP page and endpoint | `https://mega.tensorplay.cn/mcp` |
-| Marketplace | `https://mega.tensorplay.cn/mcp/explore` |
-| Marketplace detail, files, and Community | `https://mega.tensorplay.cn/mcp/<namespace>/<name>` |
+| Marketplace | `https://mega.tensorplay.cn/mcps` |
+| Marketplace detail, files, and Community | `https://mega.tensorplay.cn/mcps/<namespace>/<name>` |
 
 Every ChatGPT, Codex, CLI, Plugin, and generic MCP client connects only to
-`https://mega.tensorplay.cn/mcp`. Paths below `/mcp/<namespace>/<name>` are
-browser pages, never independent protocol endpoints.
+`https://mega.tensorplay.cn/mcp`. The plural `/mcps` tree is the repository and
+marketplace surface, never an independent protocol endpoint.
 
 ## Gateway workflow
 
@@ -39,8 +39,8 @@ content and do not broaden the caller's authorization.
 Each listing has two independent resources:
 
 - A **public MCP repository** owns the marketplace name and page. It has the
-  same README, files and versions, and Community workflow as a Model
-  repository.
+  first-class `repo_type=mcp` value and the same README, files, versions, Git,
+  and Community workflow as a Model repository.
 - A **private Space runtime** executes MCP requests. It is bound internally to
   the listing and is not linked or identified on the public repository page.
 
@@ -55,6 +55,13 @@ Install a listing's versioned companion snapshot with the MEGA CLI:
 mega mcp search xpuoj
 mega mcp info mega/xpuoj
 mega mcp install mega/xpuoj
+```
+
+The same repository can be created and updated explicitly:
+
+```bash
+mega repos create alice/my-tools --type mcp
+mega upload alice/my-tools ./README.md README.md --type mcp
 ```
 
 `mega mcp install` stores files under
@@ -115,7 +122,7 @@ authentication. Hub is the public router and security boundary.
 
 ## First MEGA listing: XPUOJ
 
-[`mega/xpuoj`](/mcp/mega/xpuoj) publishes its plugin README, CLI companion,
+[`mega/xpuoj`](/mcps/mega/xpuoj) publishes its plugin README, CLI companion,
 Skill, manifest, and artwork together. A fixed MEGA Worker binding handles
 remote calls. Account-specific actions still need the local XPUOJ CLI or
 plugin and the user's existing browser sign-in.

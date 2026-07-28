@@ -41,7 +41,7 @@ For automation, inject `MEGA_TOKEN` or pass `--token` to an individual command. 
 | Domain | Commands | Purpose |
 | --- | --- | --- |
 | Authentication | `mega auth` | Login, logout, switch tokens, inspect identity, and manage public keys. |
-| Repositories | `mega repos`, `models`, `datasets`, `spaces` | Create, inspect, update, move, duplicate, and delete Hub repositories. |
+| Repositories | `mega repos`, `models`, `datasets`, `spaces` | Create, inspect, update, move, duplicate, and delete model, dataset, Space, and MCP repositories. |
 | Files | `mega upload`, `upload-large-folder`, `download`, `snapshot`, `cp` | Transfer selected files or complete repository trees. |
 | Revisions | `mega repos branch`, `tag`, `history`, `commit` | Manage branches and tags and inspect immutable commit history. |
 | Community | `mega discussions` | Operate discussions, pull requests, comments, reactions, and merge state. |
@@ -58,6 +58,9 @@ mega repos create mega/demo --type model --exist-ok
 mega upload mega/demo ./model --revision main
 mega repos tag create mega/demo v1.0 --message "First release"
 mega snapshot mega/demo --revision v1.0 --local-dir ./release
+mega repos create mega/my-tools --type mcp
+mega upload mega/my-tools ./README.md README.md --type mcp
+mega cp ./plugin.json mega://mcps/mega/my-tools@main/plugin.json
 ```
 
 Typed repository aliases expose the common operations without repeating `--type`:
