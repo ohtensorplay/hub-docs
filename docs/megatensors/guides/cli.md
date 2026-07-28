@@ -45,6 +45,7 @@ For automation, inject `MEGA_TOKEN` or pass `--token` to an individual command. 
 | Files | `mega upload`, `upload-large-folder`, `download`, `snapshot`, `cp` | Transfer selected files or complete repository trees. |
 | Revisions | `mega repos branch`, `tag`, `history`, `commit` | Manage branches and tags and inspect immutable commit history. |
 | Community | `mega discussions` | Operate discussions, pull requests, comments, reactions, and merge state. |
+| MCP Marketplace | `mega mcp` | Search listings, inspect pricing and runtime state, and safely install versioned local companion files. |
 | Compute | `mega jobs` | Run and observe bounded containers and recurring schedules. |
 | Webhooks | `mega webhooks` | Configure signed event delivery and inspect receipts. |
 | Local cache | `mega cache` | Inspect, verify, prune, and remove cached Hub artifacts. |
@@ -68,6 +69,23 @@ mega spaces files alice/demo --revision main
 ```
 
 See [Hub Repositories](/docs/hub/repositories) for file, revision, and community semantics.
+
+## MCP Marketplace workflows
+
+Search the public catalogue, inspect one listing, and install its optional
+local CLI, Skill, or Plugin companion:
+
+```bash
+mega mcp search judge
+mega mcp info mega/xpuoj --format json
+mega mcp install mega/xpuoj
+```
+
+Files install under `~/.local/share/mega/mcp/<namespace>/<name>` by default.
+The command requires a README, writes `.mega-mcp.json`, replaces atomically,
+and never executes publisher code. Use `--revision`, `--dest`, or `--force`
+when needed. AI clients still connect only to
+`https://mega.tensorplay.cn/mcp`.
 
 ## Spaces workflows
 

@@ -17,7 +17,7 @@ This avoids changing a similarly named repository or the wrong revision.
 
 ## Available MCP tasks
 
-MEGA MCP v1.1 has 29 focused tools. Typical workflows include:
+MEGA MCP v1.1 has 32 focused tools. Typical workflows include:
 
 - Identify the connected account or inspect a public profile.
 - Find and inspect models, datasets, Spaces, papers, and repositories. Dataset inspection can retrieve supported structure and first-row previews.
@@ -26,6 +26,8 @@ MEGA MCP v1.1 has 29 focused tools. Typical workflows include:
 - Inspect, run, cancel, or schedule a bounded container Job; or inspect and operate a Sandbox session or warm pool after confirming cost and scope.
 - Work with collections, blog content and comments, or repository discussions and pull requests when the requested scope permits it.
 - Search and fetch current MEGA documentation.
+- Search the MCP Marketplace, inspect a selected publisher tool schema, and
+  invoke it through the official gateway with an explicit Mega Coin maximum.
 
 MCP deliberately excludes arbitrary HTTP requests, bulk artifact transfer,
 secret-value submission, account-key management, webhook management, and
@@ -37,6 +39,17 @@ Use the MEGA CLI path for local files and directories, binary artifacts, bulk
 uploads or downloads, Git branches and history, scripts, long-running waits,
 streaming output, and secret-bearing operations. These tasks need local context
 or an interactive workflow that is better handled outside a bounded MCP call.
+
+Marketplace MCPs may include a local companion. Install its versioned files
+without executing publisher code:
+
+```bash
+mega mcp info mega/xpuoj
+mega mcp install mega/xpuoj
+```
+
+Review its README before enabling it. Remote calls still use
+`https://mega.tensorplay.cn/mcp`.
 
 Read [Use the MEGA Codex Plugin](/docs/ai-native/using-the-plugin) and
 [MEGA Agent Skills](/docs/ai-native/skills) for the workflow-selection guidance
