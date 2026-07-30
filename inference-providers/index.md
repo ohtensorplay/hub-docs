@@ -134,24 +134,26 @@ Stickiness does not override health, a disabled Provider, capacity admission, or
 
 MEGA does not retain prompts, responses, embedding inputs, or tool arguments. It retains only content-free request metadata needed for routing, reliability, abuse prevention, and billing, such as request hashes, byte and token counts, model, Provider, cost, latency, and status. Authorization headers, cookies, and Provider keys are redacted. The selected Provider necessarily receives the content required to perform inference; review that Provider's data policy before use.
 
-## CLI reference
+## API quick reference
 
 ```bash
-mega inference models --task chat-completions
-mega inference chat OWNER/MODEL "Hello" --provider fastest
-mega inference responses OWNER/MODEL "Hello" --provider preferred
-mega inference embeddings OWNER/MODEL "text to embed"
+curl https://inference.tensorplay.cn/v1/responses \
+  -H "Authorization: Bearer $MEGA_TOKEN" \
+  -H "Content-Type: application/json" \
+  --data '{
+    "model": "OWNER/MODEL:preferred",
+    "input": "Hello"
+  }'
 ```
 
-Shared request options are:
+Shared request controls are:
 
-| Option | Meaning |
+| API field or header | Meaning |
 | --- | --- |
-| `--provider` | `auto`, `fastest`, `cheapest`, `preferred`, or a Provider slug. |
-| `--billing` | `auto` (saved key, then routed), `routed`, or `byok` (key required). |
-| `--bill-to` | Eligible organization handle. |
-| `--session-id` | Stable conversation affinity signal for Chat/Responses. |
-| `--token` | One request's MEGA PAT; otherwise use `MEGA_TOKEN` or the active login. |
-| `--stream` | Stream Chat/Responses as text or JSON Lines. |
+| `model` suffix | `:fastest`, `:cheapest`, `:preferred`, or `:provider-slug`. |
+| `X-Mega-Inference-Billing` | `auto` (saved key, then routed), `routed`, or `byok` (key required). |
+| `X-Mega-Bill-To` | Eligible organization handle. |
+| `X-Mega-Session-Id` | Stable conversation affinity signal for Chat/Responses. |
+| `stream: true` | Stream Chat/Responses as Server-Sent Events. |
 
 For the runnable setup path, start with [Your First Inference Provider Call](/docs/inference-providers/guides/first-api-call).

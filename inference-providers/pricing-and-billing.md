@@ -16,11 +16,10 @@ Included credit is promotional, inference-only credit. It is not cash, cannot be
 
 ## Compare current prices
 
-Use [Inference Models](/inference/models) or the CLI:
+Use [Inference Models](/inference/models) or the live catalog API:
 
 ```bash
-mega inference models --sort input-price
-mega inference models --sort output-price --format json
+curl https://mega.tensorplay.cn/api/inference/models
 ```
 
 The catalog's `pricing.input` and `pricing.output` fields are USD per one million tokens. Prices belong to a model, Provider, and task mapping and may change independently.
@@ -29,7 +28,7 @@ For `:cheapest`, Chat Completions and Responses compare output price first. Embe
 
 ## Choose a billing mode
 
-Set the mode with `X-Mega-Inference-Billing` or the CLI's `--billing` option:
+Set the mode with `X-Mega-Inference-Billing`:
 
 | Mode | Behavior |
 | --- | --- |
@@ -38,8 +37,17 @@ Set the mode with `X-Mega-Inference-Billing` or the CLI's `--billing` option:
 | `byok` | Require a saved custom key and never fall back to MEGA billing. |
 
 ```bash
-mega inference chat mega/gpt-5.4-mini "Hello" --billing routed
-mega inference chat mega/gpt-5.4-mini "Hello" --provider groq --billing byok
+curl https://inference.tensorplay.cn/v1/responses \
+  -H "Authorization: Bearer $MEGA_TOKEN" \
+  -H "Content-Type: application/json" \
+  -H "X-Mega-Inference-Billing: routed" \
+  --data '{"model":"mega/gpt-5.4-mini","input":"Hello"}'
+
+curl https://inference.tensorplay.cn/v1/responses \
+  -H "Authorization: Bearer $MEGA_TOKEN" \
+  -H "Content-Type: application/json" \
+  -H "X-Mega-Inference-Billing: byok" \
+  --data '{"model":"mega/gpt-5.4-mini:groq","input":"Hello"}'
 ```
 
 The billing mode filters route candidates. A Provider that only supports custom keys cannot serve a forced `routed` request, and a Provider without a custom-key endpoint cannot serve a forced `byok` request.

@@ -11,15 +11,11 @@ After saving, MEGA displays only a fingerprint and status. The secret is encrypt
 Future `auto` requests use the saved key when that Provider is selected. To prove that no MEGA-funded route can be used, force BYOK:
 
 ```bash
-mega inference chat mega/gpt-5.4-mini "Hello" \
-  --provider groq \
-  --billing byok
-```
-
-The equivalent HTTP header is:
-
-```http
-X-Mega-Inference-Billing: byok
+curl https://inference.tensorplay.cn/v1/responses \
+  -H "Authorization: Bearer $MEGA_TOKEN" \
+  -H "Content-Type: application/json" \
+  -H "X-Mega-Inference-Billing: byok" \
+  --data '{"model":"mega/gpt-5.4-mini:groq","input":"Hello"}'
 ```
 
 ## Billing-mode behavior
@@ -72,7 +68,7 @@ MEGA records route, task, token-count, latency, and zero-cost BYOK ledger metada
 
 - Create a replacement key in the Provider console.
 - Save it in MEGA; verify the new fingerprint.
-- Make a low-cost request with `--billing byok`.
+- Make a low-cost request with `X-Mega-Inference-Billing: byok`.
 - Revoke the old key at the Provider.
 - Remove the MEGA key entirely if routed billing should be the only future mode.
 

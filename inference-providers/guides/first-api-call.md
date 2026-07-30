@@ -10,107 +10,32 @@ You need a MEGA account and a Personal Access Token (PAT) with the `inference:ru
 export MEGA_TOKEN="mega_..."
 ```
 
-An interactive workstation may use `mega auth login` instead. The CLI and Python client resolve the selected token automatically.
-
 ## Step 1: find a live model
 
 In the browser, open the [Inference Provider model comparison](/inference/models) to
 filter live model/Provider routes and compare price, context length, latency,
 throughput, tool calling, and structured-output support.
 
-Install the MEGA CLI if needed:
+The same live catalog is available through HTTP:
 
 ```bash
-uv tool install megatensors
+curl https://inference.tensorplay.cn/v1/models \
+  -H "Authorization: Bearer $MEGA_TOKEN"
 ```
 
-Alternatively, install with `pipx` or the active Python environment:
+Use the public Hub catalog when you need MEGA-specific Provider, price, and
+capability fields:
 
 ```bash
-pipx install megatensors
-python -m pip install megatensors
+curl https://mega.tensorplay.cn/api/inference/models
 ```
 
-List healthy Chat Completions mappings:
+Each model contains its live Provider mappings. Prices are USD per one million
+tokens, and one model can expose multiple Providers or tasks.
 
-```bash
-mega models ls \
-  --pipeline-tag chat-completions \
-  --warm \
-  --sort first-token-latency
-```
+## Step 2: call with the OpenAI SDK
 
-Narrow the result to one Provider or emit machine-readable records:
-
-```bash
-mega models ls --inference-provider mega --format json
-mega inference models --task embeddings --format json
-```
-
-Each row is one live model/Provider mapping. Prices are USD per one million tokens. A model can appear more than once when multiple Providers serve it.
-
-## Step 2: make the call from the CLI
-
-The shortest first call is:
-
-```bash
-mega inference chat mega/gpt-5.4-mini "Reply with exactly: MEGA is ready"
-```
-
-Omit the prompt to read it from standard input. This avoids putting sensitive input in shell history:
-
-```bash
-printf '%s' 'Reply with exactly: MEGA is ready' \
-  | mega inference chat mega/gpt-5.4-mini
-```
-
-The result is an OpenAI-compatible Chat Completion. The CLI writes its `Inference-Id` and selected Provider to stderr so JSON on stdout remains parseable.
-
-Use the other first-party routes in the same way:
-
-```bash
-mega inference responses mega/gpt-5.4-mini "Explain routed inference briefly"
-mega inference embeddings BAAI/bge-m3 "MEGA routes inference"
-```
-
-Add `--stream` to Chat Completions or Responses. Human and quiet modes print text as it arrives; agent and JSON modes emit one JSON event per line.
-
-## Step 3: call from Python
-
-`InferenceClient` uses the same saved token and Router:
-
-```python
-import os
-
-from megatensors import InferenceClient
-
-client = InferenceClient(
-    provider="auto",
-    api_key=os.environ["MEGA_TOKEN"],
-)
-
-result = client.chat.completions.create(
-    model="mega/gpt-5.4-mini",
-    messages=[{"role": "user", "content": "Reply with exactly: MEGA is ready"}],
-    max_tokens=32,
-)
-
-print(result.choices[0].message.content)
-```
-
-`provider="auto"` uses MEGA's default `fastest` strategy. `fastest`, `cheapest`, and `preferred` may also be passed explicitly. For embeddings:
-
-```python
-embedding = client.feature_extraction(
-    "MEGA routes inference",
-    model="BAAI/bge-m3",
-)
-print(embedding.shape)
-```
-
-## Use the OpenAI SDK
-
-MEGA exposes an OpenAI-compatible base URL. No protocol adapter is required:
+Install the OpenAI SDK:
 
 ```bash
 python -m pip install openai
@@ -146,24 +71,24 @@ vectors = client.embeddings.create(
 )
 ```
 
-## Use curl
+## Step 3: call with raw HTTP
 
 ```bash
-curl https://inference.tensorplay.cn/v1/chat/completions \
+curl -i https://inference.tensorplay.cn/v1/chat/completions \
   -H "Authorization: Bearer $MEGA_TOKEN" \
   -H "Content-Type: application/json" \
   --data '{
     "model": "mega/gpt-5.4-mini",
     "messages": [{"role": "user", "content": "Reply with exactly: MEGA is ready"}]
-  }' \
-  -D -
+  }'
 ```
 
 Every success, error, and streaming response includes an `Inference-Id` header. Record it when reporting a failed call; MEGA does not need the prompt or response content to trace routing and billing state.
 
 ## Choose a Provider
 
-Provider selection is encoded in the model ID and works identically in the CLI, SDK, and raw HTTP API:
+Provider selection is encoded in the API's `model` field and works identically
+in OpenAI-compatible SDKs and raw HTTP:
 
 | Model value | Behavior |
 | --- | --- |
@@ -173,12 +98,8 @@ Provider selection is encoded in the model ID and works identically in the CLI, 
 | `owner/model:preferred` | First healthy Provider in your account or organization preference order. |
 | `owner/model:provider-slug` | Restrict the request to one Provider. |
 
-The CLI appends the suffix for you:
-
-```bash
-mega inference chat mega/gpt-5.4-mini "Hello" --provider cheapest
-mega inference chat mega/gpt-5.4-mini "Hello" --provider mega
-```
+For example, send `mega/gpt-5.4-mini:cheapest` or
+`mega/gpt-5.4-mini:mega` as the `model` value.
 
 MEGA can fail over only before response headers or the first streaming byte are sent. It never transparently retries after content starts, preventing duplicated output and duplicated settlement.
 
@@ -188,29 +109,31 @@ The default `auto` billing mode follows the configured account: when the selecte
 
 After you save an encrypted Provider key in **Settings → Inference Providers**, normal
 `auto` calls use it automatically when that Provider is selected. To require a saved
-key and fail instead of falling back to routed billing, select BYOK explicitly:
+key and fail instead of falling back to routed billing, set a request header:
 
-```bash
-mega inference chat mega/gpt-5.4-mini "Hello" \
-  --provider groq \
-  --billing byok
+```python
+byok = OpenAI(
+    base_url="https://inference.tensorplay.cn/v1",
+    api_key=os.environ["MEGA_TOKEN"],
+    default_headers={"X-Mega-Inference-Billing": "byok"},
+)
+response = byok.responses.create(
+    model="mega/gpt-5.4-mini:groq",
+    input="Hello",
+)
 ```
 
-MEGA authenticates the PAT, decrypts the saved Provider key only for dispatch, and records zero MEGA inference cost. The Provider bills the key owner directly. The key is never returned to the CLI or browser.
+MEGA authenticates the PAT, decrypts the saved Provider key only for dispatch,
+and records zero MEGA inference cost. The Provider bills the key owner directly.
+The key is never returned to the SDK or browser.
 
-Use `--billing routed` to ignore a saved key for one call. Use `--billing byok` to require a saved key and fail instead of falling back to MEGA billing.
+Set `X-Mega-Inference-Billing: routed` to ignore a saved key for one call. Set
+it to `byok` to require a saved key and fail instead of falling back to MEGA
+billing.
 
 Eligible Team and Enterprise members with `write` or `admin` access can bill an organization:
 
-```bash
-mega inference responses mega/gpt-5.4-mini "Hello" \
-  --bill-to research-lab
-```
-
-For raw HTTP or the OpenAI SDK, the equivalent headers are:
-
 ```text
-X-Mega-Inference-Billing: byok
 X-Mega-Bill-To: research-lab
 ```
 

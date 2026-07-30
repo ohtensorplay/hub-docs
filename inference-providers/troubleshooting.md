@@ -14,11 +14,13 @@ Start with the response status and `Inference-Id`, then separate authentication,
 curl -i https://inference.tensorplay.cn/v1/models \
   -H "Authorization: Bearer $MEGA_TOKEN"
 
-mega inference models --search Qwen3-32B --format json
+curl https://mega.tensorplay.cn/api/inference/models
 
-mega inference chat mega/gpt-5.4-mini "health check" \
-  --provider mega \
-  --billing routed
+curl -i https://inference.tensorplay.cn/v1/responses \
+  -H "Authorization: Bearer $MEGA_TOKEN" \
+  -H "Content-Type: application/json" \
+  -H "X-Mega-Inference-Billing: routed" \
+  --data '{"model":"mega/gpt-5.4-mini:mega","input":"health check"}'
 ```
 
 Use a non-sensitive test prompt for diagnostics.
@@ -31,20 +33,26 @@ Check that:
 - the credential is a MEGA PAT rather than a Provider key;
 - the PAT includes `inference:run`;
 - it is not expired or revoked;
-- the CLI is reading the expected login or `MEGA_TOKEN`.
+- the application is reading the expected `MEGA_TOKEN`.
 
 Token introspection can be cached for up to 60 seconds. Wait for that bound after changing or revoking a credential before concluding the change failed.
 
 ## `402` billing errors
 
-For `--billing routed`, inspect the selected billing owner's compute credit, debt or restricted status, and monthly inference limit. Organization requests must use the intended `--bill-to` value.
+For `X-Mega-Inference-Billing: routed`, inspect the selected billing owner's
+compute credit, debt or restricted status, and monthly inference limit.
+Organization requests must use the intended `X-Mega-Bill-To` value.
 
 To distinguish credit from custom-key behavior:
 
-```bash
-mega inference chat mega/gpt-5.4-mini "health check" --billing routed
-mega inference chat mega/gpt-5.4-mini "health check" --provider groq --billing byok
+```http
+X-Mega-Inference-Billing: routed
+
+X-Mega-Inference-Billing: byok
 ```
+
+For the BYOK comparison, also append the saved key's Provider slug to the
+request model, for example `mega/gpt-5.4-mini:groq`.
 
 Do not switch to BYOK merely to bypass an organization spending policy unless the external Provider account is authorized for that workload.
 
@@ -57,9 +65,10 @@ Verify that the caller has `write` or `admin` access to a Team or Enterprise org
 Refresh the live catalog:
 
 ```bash
-mega inference models --task chat-completions --search Qwen
-mega inference models --task responses --search Qwen
-mega inference models --task embeddings --search bge
+curl https://inference.tensorplay.cn/v1/models \
+  -H "Authorization: Bearer $MEGA_TOKEN"
+
+curl https://mega.tensorplay.cn/api/inference/models
 ```
 
 Check the exact case-sensitive `owner/model` ID and the endpoint task. A repository page, inference-related tag, or mapping on another task does not make the requested route live.
@@ -77,7 +86,9 @@ A Provider disabled in the selected billing owner's settings remains ineligible 
 - the key status is `unverified` or `valid`, not invalid or disabled;
 - the request uses the Provider that owns the saved key.
 
-If a Provider rejects a configured key with `401` or `403`, rotate it at the Provider and in MEGA. Use `--billing routed` to bypass the saved key for a deliberate test.
+If a Provider rejects a configured key with `401` or `403`, rotate it at the
+Provider and in MEGA. Use `X-Mega-Inference-Billing: routed` to bypass the saved
+key for a deliberate test.
 
 ## `413` request-size errors
 

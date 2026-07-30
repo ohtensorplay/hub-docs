@@ -4,30 +4,10 @@ The Embeddings endpoint converts one string or a batch of strings into OpenAI-co
 
 ## Find a compatible model
 
-```bash
-mega inference models --task embeddings --sort input-price
-```
-
-Compare context length, input price, throughput, Provider, and custom-key support. Output-token price is normally zero for this task.
-
-## Call with the CLI
-
-Embed one input:
-
-```bash
-mega inference embeddings BAAI/bge-m3 "MEGA routes inference"
-```
-
-Embed several inputs in one request:
-
-```bash
-mega inference embeddings BAAI/bge-m3 \
-  "first document" \
-  "second document" \
-  --format json
-```
-
-Omit all input arguments to read one string from standard input. Use `--dimensions` only when the selected Provider model supports a reduced output size.
+Use [Inference Models](/inference/models) or the authenticated `/v1/models`
+endpoint to find a live `embeddings` route. Compare context length, input
+price, throughput, Provider, and custom-key support. Output-token price is
+normally zero for this task.
 
 ## Call with HTTP
 

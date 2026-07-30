@@ -4,30 +4,10 @@ Chat Completions sends an ordered message history to a live Provider and returns
 
 ## Find a compatible route
 
-```bash
-mega inference models --task chat-completions
-```
-
-Check `supports_tools` and `supports_structured_output` in the [Model Catalog](/docs/inference-providers/model-catalog). A model name alone does not guarantee either capability across every Provider.
-
-## Call with the CLI
-
-```bash
-mega inference chat mega/gpt-5.4-mini "Explain routed inference in one sentence"
-```
-
-Useful options include:
-
-```bash
-mega inference chat mega/gpt-5.4-mini "Return one short answer" \
-  --system "Be precise." \
-  --temperature 0.2 \
-  --max-tokens 128 \
-  --provider cheapest \
-  --billing auto
-```
-
-Omit the prompt to read standard input. Add `--stream` for incremental text; JSON and agent output modes emit one Server-Sent Event per line.
+Use [Inference Models](/inference/models) or the authenticated `/v1/models`
+endpoint to find a live `chat-completions` route. Check `supports_tools` and
+`supports_structured_output` in the [Model Catalog](/docs/inference-providers/model-catalog).
+A model name alone does not guarantee either capability across every Provider.
 
 ## Call with HTTP
 

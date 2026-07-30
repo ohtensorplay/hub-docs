@@ -1,6 +1,8 @@
 # Clients and SDKs
 
-MEGA's public Router is OpenAI-compatible, so most applications can use an OpenAI SDK with a different base URL and a MEGA token. The MEGA CLI and Python `InferenceClient` add model discovery and routing conveniences.
+MEGA's public Router is OpenAI-compatible, so applications call it through an
+OpenAI SDK or raw HTTP with a MEGA token. The model page's **Use this model**
+dialog generates the same Python, JavaScript, and cURL requests.
 
 ## Shared configuration
 
@@ -19,29 +21,17 @@ export MEGA_TOKEN="mega_..."
 
 Do not use a Provider key as `MEGA_TOKEN`. Save it through [Custom Provider Keys](/docs/inference-providers/custom-provider-keys) and continue authenticating the Router with a MEGA PAT.
 
-## MEGA CLI
+## Request controls
 
-The CLI is the fastest way to inspect routing and test credentials:
+Use the `model` value and HTTP headers consistently across every client:
 
-```bash
-mega inference models --task chat-completions
-mega inference chat mega/gpt-5.4-mini "Hello"
-mega inference responses mega/gpt-5.4-mini "Hello" --stream
-mega inference embeddings BAAI/bge-m3 "Hello" --format json
-```
-
-It reads the active login or `MEGA_TOKEN`. `Inference-Id` and selected Provider are written as hints without corrupting JSON stdout.
-
-Shared execution options are:
-
-| Option | Purpose |
+| Control | API contract |
 | --- | --- |
-| `--provider` | `auto`, `fastest`, `cheapest`, `preferred`, or a Provider slug. |
-| `--billing` | `auto`, `routed`, or `byok`. |
-| `--bill-to` | Select an eligible organization billing owner. |
-| `--session-id` | Add privacy-preserving affinity for Chat or Responses. |
-| `--token` | Override the saved token for one command. |
-| `--stream` | Stream Chat or Responses as text or JSON Lines. |
+| Provider selection | Append `:fastest`, `:cheapest`, `:preferred`, or `:provider-slug` to the model ID. |
+| Billing mode | Set `X-Mega-Inference-Billing` to `auto`, `routed`, or `byok`. |
+| Billing owner | Set `X-Mega-Bill-To` to an eligible organization handle. |
+| Session affinity | Set `X-Mega-Session-Id` for Chat or Responses. |
+| Streaming | Set `stream: true` in the JSON request. |
 
 ## OpenAI Python SDK
 

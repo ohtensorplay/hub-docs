@@ -24,25 +24,12 @@ curl https://inference.tensorplay.cn/v1/models \
 
 Use the Hub catalog when you need MEGA-specific route details. Use `/v1/models` when an OpenAI-compatible client expects the standard model-list endpoint.
 
-## Use the CLI
+## Filter live routes
 
-List every live mapping or filter by task and Provider:
-
-```bash
-mega inference models
-mega inference models --task chat-completions
-mega inference models --task responses --provider mega
-mega inference models --task embeddings --sort input-price
-```
-
-Available sort keys are `model`, `first-token-latency`, `throughput`, `input-price`, and `output-price`. Add `--format json` for automation.
-
-`mega models ls` uses the same live catalog when an inference filter is present:
-
-```bash
-mega models ls --warm --sort first-token-latency
-mega models ls --inference-provider groq --format json
-```
+Use [Inference Models](/inference/models) to filter by task or Provider and sort
+by latency, throughput, and price. For automation, read the Hub catalog JSON or
+the Provider-filtered endpoint shown above; do not infer availability from a
+repository tag.
 
 ## Read a catalog record
 
@@ -51,7 +38,7 @@ Each model contains a `providers` array. Important fields are:
 | Field | Meaning |
 | --- | --- |
 | `id` | Public Hub model ID in `owner/model` form. |
-| `provider` | Provider slug accepted as a model suffix or CLI selection. |
+| `provider` | Provider slug accepted as a model suffix. |
 | `task` | `chat-completions`, `responses`, or `embeddings`. |
 | `pricing.input` | Standard input price in USD per one million tokens. |
 | `pricing.output` | Standard output price in USD per one million tokens. |

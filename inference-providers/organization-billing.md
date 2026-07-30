@@ -21,13 +21,6 @@ before retrying a request.
 
 Use the organization handle, not its display name:
 
-```bash
-mega inference chat mega/gpt-5.4-mini "Summarize this" \
-  --bill-to research-lab
-```
-
-Raw HTTP and OpenAI-compatible clients use:
-
 ```http
 X-Mega-Bill-To: research-lab
 ```
@@ -52,13 +45,14 @@ Open **Organization Settings → Inference Providers**. The overview shows organ
 
 For preferred routing:
 
-```bash
-mega inference responses mega/gpt-5.4-mini "Hello" \
-  --provider preferred \
-  --bill-to research-lab
+```json
+{"model": "mega/gpt-5.4-mini:preferred", "input": "Hello"}
 ```
 
-The Router uses the organization's first compatible healthy Provider. Disabled Providers remain unavailable even when named explicitly.
+Send that body to `/v1/responses` with
+`X-Mega-Bill-To: research-lab`. The Router uses the organization's first
+compatible healthy Provider. Disabled Providers remain unavailable even when
+named explicitly.
 
 ## Combine billing modes
 
@@ -66,19 +60,18 @@ Organization ownership and billing mode are independent:
 
 Require the organization's saved Provider key:
 
-```bash
-mega inference chat mega/gpt-5.4-mini "Hello" \
-  --provider groq \
-  --billing byok \
-  --bill-to research-lab
+```http
+X-Mega-Inference-Billing: byok
+X-Mega-Bill-To: research-lab
 ```
+
+Use `mega/gpt-5.4-mini:groq` as the request's `model` value.
 
 Ignore organization keys and use its MEGA compute credit:
 
-```bash
-mega inference chat mega/gpt-5.4-mini "Hello" \
-  --billing routed \
-  --bill-to research-lab
+```http
+X-Mega-Inference-Billing: routed
+X-Mega-Bill-To: research-lab
 ```
 
 BYOK requests record zero MEGA inference cost and are excluded from the organization's routed hard limit. The external Provider bills the organization account associated with the saved key.

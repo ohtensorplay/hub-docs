@@ -2,11 +2,11 @@
 
 MEGA selects an eligible Provider route for each request from the public model
 ID, task, account preferences, billing mode, price, and current availability.
-The same model-selection options work across the CLI, SDKs, and raw HTTP.
+The same model-selection values work across OpenAI-compatible SDKs and raw HTTP.
 
 ## Select a routing strategy
 
-Append a suffix to `owner/model` or use the CLI's `--provider` option:
+Append a suffix to the API request's `owner/model` value:
 
 | Model ID | Selection behavior |
 | --- | --- |
@@ -18,13 +18,14 @@ Append a suffix to `owner/model` or use the CLI's `--provider` option:
 
 For example:
 
-```bash
-mega inference chat mega/gpt-5.4-mini "Hello" --provider cheapest
-mega inference responses mega/gpt-5.4-mini "Hello" --provider preferred
-mega inference embeddings BAAI/bge-m3 "Hello" --provider mega
+```json
+{"model": "mega/gpt-5.4-mini:cheapest", "input": "Hello"}
+{"model": "mega/gpt-5.4-mini:preferred", "input": "Hello"}
+{"model": "BAAI/bge-m3:mega", "input": ["Hello"]}
 ```
 
-`auto` is a CLI and billing convenience value, not a model suffix. It leaves the model unsuffixed and therefore uses the default fastest strategy.
+`auto` is a billing value, not a model suffix. Leave the model unsuffixed to
+use the default fastest strategy.
 
 ## Candidate eligibility
 
@@ -80,11 +81,13 @@ Provider suffix.
 Routing strategy, billing mode, and billing owner are independent:
 
 ```bash
-mega inference chat mega/gpt-5.4-mini "Hello" \
-  --provider preferred \
-  --billing routed \
-  --bill-to research-lab \
-  --session-id conversation-42
+curl https://inference.tensorplay.cn/v1/responses \
+  -H "Authorization: Bearer $MEGA_TOKEN" \
+  -H "Content-Type: application/json" \
+  -H "X-Mega-Inference-Billing: routed" \
+  -H "X-Mega-Bill-To: research-lab" \
+  -H "X-Mega-Session-Id: conversation-42" \
+  --data '{"model":"mega/gpt-5.4-mini:preferred","input":"Hello"}'
 ```
 
 See [Pricing and Billing](/docs/inference-providers/pricing-and-billing), [Custom Provider Keys](/docs/inference-providers/custom-provider-keys), and [Organization Billing](/docs/inference-providers/organization-billing) for those controls.
