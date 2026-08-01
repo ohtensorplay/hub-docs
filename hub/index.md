@@ -19,6 +19,7 @@ MEGA combines a model artifact runtime with a collaborative Hub. Use the same pl
 | --- | --- |
 | Choose an integration surface | [CLI](/docs/megatensors/guides/cli), [Python SDK](/docs/hub/sdk), [Hub API](/docs/hub/api), or [MCP](/docs/hub/mcp) |
 | Create and version a Hub repository | [Repositories](/docs/hub/repositories) |
+| Reuse Hugging Face tooling | [Hugging Face Compatibility](/docs/hub/hugging-face-compatibility) |
 | Publish a model release | [Model Repositories](/docs/hub/models) |
 | Publish a dataset | [Dataset Repositories](/docs/hub/datasets) |
 | Write a useful model or dataset card | [Repository Cards](/docs/hub/repository-cards) |

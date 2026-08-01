@@ -5,6 +5,12 @@ MEGA Hub repositories provide one revisioned storage model for `model`,
 `dataset`, `space`, and `mcp` content. Every file mutation creates an immutable
 commit, while branches and tags provide readable revision names.
 
+Use a repository for reviewable history and pinned releases. For mutable files
+that are synchronized in place, use a [Storage Bucket](/docs/hub/storage-buckets)
+instead; Buckets do not provide commits, branches, or tags. For large working
+trees, prefer the CLI or HTTP upload paths before cloning the entire repository
+locally.
+
 ## Repository identity
 
 A repository ID has the form `owner/name`:
