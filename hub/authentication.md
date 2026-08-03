@@ -102,9 +102,10 @@ Account-key operations require `account:keys` when called with a fine-grained to
 
 Generate a dedicated Ed25519 key, upload only its public half, and verify the host greeting:
 
-> **The Web/API and SSH hostnames are intentionally different.** Use
-> `mega.tensorplay.cn` for the website, API, and HTTPS Git, but use
-> `ssh.tensorplay.cn` for SSH Git. Do not substitute one hostname for the other.
+> **HTTPS and SSH use different published hostnames.** Use
+> `git.tensorplay.cn` directly for HTTPS Git and `ssh.tensorplay.cn` for SSH.
+> Existing Git remotes on `mega.tensorplay.cn` remain compatible through a
+> streamed fallback; use the dedicated HTTPS host for new clones.
 
 ```bash
 ssh-keygen -t ed25519 -C "$USER@$(hostname)" -f ~/.ssh/id_ed25519_mega
@@ -118,7 +119,7 @@ Host ssh.tensorplay.cn
 EOF
 
 ssh -T git@ssh.tensorplay.cn
-git clone git@ssh.tensorplay.cn:OWNER/REPOSITORY.git
+git clone git@ssh.tensorplay.cn:OWNER/REPOSITORY
 ```
 
 The SSH key authenticates the account; normal repository permissions still decide read or write access. Removing the key immediately prevents new SSH authorization.
@@ -139,7 +140,7 @@ ssh-keyscan -t ed25519 ssh.tensorplay.cn 2>/dev/null | ssh-keygen -lf -
 ```
 
 If `ssh -T` cannot connect, use HTTPS Git while the issue is investigated.
-Successful HTTPS access on `mega.tensorplay.cn` does not prove SSH reachability
+Successful HTTPS access on `git.tensorplay.cn` does not prove SSH reachability
 on `ssh.tensorplay.cn`.
 
 ## GPG commit verification

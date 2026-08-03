@@ -10,7 +10,8 @@ storage protocol.
 Clone the repository, make your change, commit it, and push as usual:
 
 ```bash
-git clone https://mega.tensorplay.cn/OWNER/REPOSITORY.git
+curl -sSfL https://mega.tensorplay.cn/git-xet/install.sh | sh
+git clone https://git.tensorplay.cn/OWNER/REPOSITORY.git
 cd REPOSITORY
 git add .
 git commit -m "Update weights"
@@ -20,6 +21,11 @@ git push origin main
 The repository remains the source of truth for its visible files, history, and
 revisions. Use the [MEGA CLI](/docs/megatensors/guides/cli) when a large release
 tree needs resumable transfer or a scripted workflow.
+
+MEGA's Git-Xet client advertises `xet` for upload and `xet-download` for
+download. Once the Git LFS batch request is authorized, Git-Xet sends and
+receives file bytes directly from the negotiated Xet CAS. The Hub and Git
+Gateway stay on the control plane and do not proxy the large-file stream.
 
 ## Migrate gradually
 
