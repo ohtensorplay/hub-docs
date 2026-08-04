@@ -19,7 +19,13 @@ it.
 ## Choose activity preferences
 
 Open **Settings → Notifications** to control whether repository activity and
-discussion activity appear in your inbox. Security and essential account
+discussion activity appear in your inbox and whether each category can also be
+delivered by email. Pull Request review requests belong to discussion activity.
+Their dedicated email identifies the contributor, PR, and repository and links
+directly to the browser review.
+Email delivery is asynchronous and preference-controlled; the Inbox and the
+underlying Pull Request remain authoritative if an email is delayed. Security
+and essential account
 notices remain visible so that an account cannot accidentally hide information
 needed to protect access.
 

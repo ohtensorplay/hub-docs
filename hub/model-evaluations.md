@@ -1,49 +1,134 @@
 # Model Evaluations
 
-Model evaluations attach structured test results to a model repository so
-readers can inspect the task, metric, score, and source alongside the release.
-They complement a [Repository Card](/docs/hub/repository-cards); they do not
-replace an explanation of the data, method, limitations, or intended use.
+Model repositories can publish structured benchmark results from
+HF-compatible `.eval_results/*.yaml` files. The model page reads files merged
+into `main` as repository results and also shows results proposed by open Pull
+Requests with a **community** label.
 
-## Add useful results
+## Submit a benchmark score
 
-For each result, record a recognizable evaluation suite, task, metric, score,
-and unit. Add a source URL or concise details when they help a reader reproduce
-or interpret the result. Link the result to the release revision it describes
-in the card or source material.
+1. Open the model page and find **Evaluation results**.
+2. Select **Submit results** and sign in.
+3. Enter the dataset ID, task ID, numeric score, and any reproducibility fields.
+4. Select **Open Pull Request**.
+5. Review the generated Pull Request from the model repository's **Community** tab.
 
-Do not compare scores unless the task, dataset version, split, preprocessing,
-prompting, hardware assumptions, and metric definition are compatible. State
-known limitations, confidence intervals, and failure cases in the model card.
+The browser creates a dedicated contribution branch, writes one YAML file below
+`.eval_results/`, and opens a Pull Request against `main`. A contributor does
+not need repository write permission for this scoped flow, but the repository
+must be readable and its Community feature must be enabled. The contribution is
+attributed to the signed-in account.
 
-## Read results on a model page
+While the Pull Request is open, its new or changed evaluation files appear on
+the model page with a **community** label and a link back to the review. Closing
+the Pull Request removes those proposed results. Merging it publishes the YAML
+on `main`, removes the community label, and makes the result part of repository
+history.
 
-Published model pages show their available test results in the evaluation
-panel. A result can include a source link and a verification indicator when it
-has been reviewed through the applicable MEGA workflow. An absent indicator is
-not evidence that a result is incorrect; it means readers should assess the
-provided evidence themselves.
+## YAML format
 
-## Manage results through the API
+Every `.eval_results/*.yaml` file contains a non-empty list. The required fields
+match the Hugging Face
+[Eval Results specification](https://huggingface.co/docs/hub/eval-results):
 
-Repository writers can manage evaluations with the public Hub API:
+```yaml
+- dataset:
+    id: cais/hle
+    task_id: text-generation
+    revision: main
+  value: 56
+  date: 2026-08-03
+  source:
+    url: https://example.com/evals/alice-qwen-demo-hle
+    name: Release evaluation report
+    user: alice
+  notes: Revision v1.0, no tools
+```
+
+| Field | Required | Meaning |
+| --- | --- | --- |
+| `dataset.id` | Yes | Benchmark dataset in `owner/name` form. |
+| `dataset.task_id` | Yes | Task or sub-leaderboard identity. |
+| `value` | Yes | Finite numeric result. |
+| `dataset.revision` | No | Dataset branch, tag, or commit used for the run. |
+| `date` | No | ISO-8601 evaluation date. |
+| `source.url` | No | HTTP or HTTPS leaderboard, report, trace, or paper. |
+| `source.name` | No | Human-readable evidence source. Requires `source.url`. |
+| `source.user` | No | Evaluator or source account. Requires `source.url`. |
+| `notes` | No | Concise protocol and reproducibility notes. |
+
+MEGA never treats a foreign `verifyToken` as a MEGA verification. Verification
+badges remain server-managed trust signals.
+
+## Owner review and notifications
+
+Open **Community → Pull requests**, select the result PR, inspect its commit and
+file diff, and check the benchmark protocol and evidence. A repository writer
+can comment, close or reopen the proposal, and merge it when the source remains
+a fast-forward descendant of `main`.
+
+When a contributor opens a PR, MEGA sends an Inbox review request to the
+personal repository owner. For organization repositories, organization members
+with `admin` or `write` access receive it. MEGA also queues the dedicated
+**Pull Request review requested** email when that recipient has **Settings →
+Notifications → Discussion activity → Email** enabled. The email names the
+contributor, PR number, and repository, and its **Review Pull Request** action
+opens the same browser review. The person opening the PR is not sent a
+self-notification. Email delivery is asynchronous; the Inbox and PR remain the
+authoritative review surfaces.
+
+Reviewers should confirm:
+
+- the score belongs to the exact model revision under review;
+- dataset revision, task, split, prompting, tools, and preprocessing are clear;
+- the numeric value uses the benchmark's published metric definition;
+- source links are accessible and do not expose credentials or private traces;
+- the result does not duplicate an unchanged YAML file already on `main`.
+
+## Submit through the API
+
+The model-page contribution endpoint accepts the same values as the form and
+requires an authenticated account with `community:write`:
+
+```http
+POST /api/repos/{owner}/{name}/model-evaluation-submissions
+Content-Type: application/json
+
+{
+  "dataset_id": "cais/hle",
+  "task_id": "text-generation",
+  "value": 56,
+  "dataset_revision": "main",
+  "date": "2026-08-03",
+  "source_url": "https://example.com/evals/alice-qwen-demo-hle",
+  "source_name": "Release evaluation report",
+  "source_user": "alice",
+  "notes": "Revision v1.0, no tools"
+}
+```
+
+The response contains the Pull Request, result-file path, contribution branch,
+and commit revision. The service deliberately controls the branch and path; it
+cannot be used as a general repository-write endpoint.
+
+Repository writers can still manage legacy database-backed records directly:
 
 | Operation | Route |
 | --- | --- |
-| Read model links and evaluations | `GET /api/repos/{owner}/{name}/model-associations` |
-| Add an evaluation | `POST /api/repos/{owner}/{name}/model-evaluations` |
-| Update an evaluation | `PATCH /api/repos/{owner}/{name}/model-evaluations/{evaluationId}` |
-| Delete an evaluation | `DELETE /api/repos/{owner}/{name}/model-evaluations/{evaluationId}` |
+| Read model links and all evaluations | `GET /api/repos/{owner}/{name}/model-associations` |
+| Create a legacy record | `POST /api/repos/{owner}/{name}/model-evaluations` |
+| Update a legacy record | `PATCH /api/repos/{owner}/{name}/model-evaluations/{evaluationId}` |
+| Delete a legacy record | `DELETE /api/repos/{owner}/{name}/model-evaluations/{evaluationId}` |
 
-An evaluation request supplies `suite`, `metric`, and `score`; it may also
-include `task`, `unit`, `source_url`, and `details`. Repository write permission
-is required for changes. Use the live [OpenAPI Explorer](/spaces/mega/openapi)
-for the complete schema and response contract.
+Those management routes require repository write permission. New community
+contributions should use `.eval_results` Pull Requests so the score, review,
+and merge history stay together.
 
 ## Release checklist
 
-- Evaluate the exact revision you publish, not an untracked local checkout.
-- Name the metric and unit unambiguously; a raw score alone is rarely useful.
-- Link to enough method detail for a reader to understand the result.
-- Keep evaluation claims consistent with the repository card and cited paper.
+- Evaluate a pinned model revision, not an untracked local checkout.
+- Record the exact benchmark dataset and task identities.
+- Include enough protocol detail for a reviewer to interpret the value.
+- Keep claims consistent with the model card and cited source.
+- Merge only after reviewing the generated YAML diff.
 - Update or remove stale results when a release changes behavior.

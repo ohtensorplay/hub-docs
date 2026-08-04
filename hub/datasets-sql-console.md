@@ -20,10 +20,16 @@ ORDER BY examples DESC
 LIMIT 20
 ```
 
-Queries must be a single `SELECT` statement over the selected `data` view.
-The console does not permit writes, file access, or changes to the repository.
-Keep result sets focused with `LIMIT`, and use the Viewer to inspect individual
-rows and column statistics.
+Queries run locally in the browser and must be one read-only
+`SELECT` statement or common-table expression over the selected `data` view.
+The console does not permit writes, external file readers, or changes to the
+repository. Keep result sets focused with `LIMIT`, and use the Viewer to inspect
+individual rows and column statistics.
+
+After a query finishes, you can share a URL that restores the SQL, copy an
+iframe embed, download the result as CSV or Parquet, or copy an equivalent
+`mega datasets sql` command. These exports contain the returned result rows;
+they do not alter the dataset revision.
 
 ## Save a personal query
 
