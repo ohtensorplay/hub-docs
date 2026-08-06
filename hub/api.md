@@ -117,7 +117,7 @@ OAuth, SCIM, Git LFS, and OpenAI-compatible inference follow their protocol-spec
 | Spaces runtime | `/api/spaces/*` |
 | Webhooks | `/api/me/webhooks/*` |
 | Papers | `/api/papers/*` |
-| Pricing and billing | `/api/pricing`, `/api/billing/*` |
+| Billing (authenticated) | `/api/billing/*` |
 
 ## Choose a client
 
