@@ -30,6 +30,7 @@ The hosted endpoint uses OAuth 2.1 with authorization-code PKCE and refresh toke
 | Community | `mega_collections`, `mega_content`, `repository_discussions` | Read and mutate collections, blog/community content, discussions, and pull requests. |
 | Guidance | `mega_doc_search`, `mega_doc_fetch` | Search ranked current documentation, then fetch the selected canonical Markdown page. |
 | MCP Marketplace | `mcp_market_search`, `mcp_market_details`, `mcp_market_call` | Search listings, inspect a publisher's current tool schemas, then invoke one paid tool through the Hub gateway. |
+| Account memory | `memory_list`, `memory_search`, `memory_remember`, `memory_update`, `memory_forget`, `memory_set_enabled`, `memory_clear` | Inspect and explicitly manage durable account context with separate opt-in scopes. |
 
 Tool visibility is not authorization. OAuth scopes determine which actions can succeed, and the Hub rechecks ownership, organization policy, budgets, and billing on every call. Search responses include normalized canonical IDs, URLs, scores, match reasons, source, pagination state, and request diagnostics. Human-readable MCP content is only a concise summary; complete JSON appears once in `structuredContent`.
 
@@ -51,7 +52,7 @@ authorization page use the same consent preference:
 
 - **Read** grants `repo:read`.
 - **Write** grants `repo:read`, `repo:write`, and `community:write`.
-- **Full** grants all nine MEGA MCP access scopes.
+- **Full** grants the nine standard MEGA MCP access scopes. Account Memory remains an explicit Custom choice.
 - **Custom** allows a dependency-safe selection.
 
 Available access scopes:
@@ -66,6 +67,8 @@ inference:run
 mcp:use
 account:keys
 webhooks:manage
+memory:read
+memory:write
 ```
 
 The default is Read. OAuth clients may additionally request `offline_access`; it allows refresh-token renewal and does not grant a MEGA data or action permission.
@@ -83,6 +86,8 @@ Current focused-tool mapping:
 | `repo:delete` | Reserved for explicit repository deletion; no current focused MCP tool exposes it |
 | `account:keys` | CLI/account-settings key management; no MCP secret-bearing key tool |
 | `webhooks:manage` | CLI/API webhook management; no current focused MCP webhook tool |
+| `memory:read` | List or search durable account context; Memory can be stale and never overrides the current request or system rules |
+| `memory:write` | Remember, update, forget, enable, disable, or explicitly clear account memory |
 
 ## Connect ChatGPT Work
 
