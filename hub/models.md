@@ -41,6 +41,19 @@ The root `README.md` may declare Hugging Face YAML metadata. Card `description` 
 
 Publish reproducible benchmark evidence with [Model Evaluations](/docs/hub/model-evaluations). Keep the score, metric, task, source, and release revision aligned with the model card.
 
+On the model page, repository relationships are grouped as a model tree, Spaces
+using the model, Collections including the model, and paper or article
+references. The inference panel is separate: it reflects live model-to-Provider
+routes rather than card tags. MEGA-native artifacts also receive a
+[MegaTensors metadata summary](/docs/megatensors/package_reference/format#hub-repository-metadata-card)
+from bounded inspection of the selected `.mega` file or `.mega.index.json`.
+
+When a healthy `chat-completions` route exists, the same panel includes a
+signed-in [Model Widget](/docs/hub/model-widgets). It uses the account's MEGA
+Inference balance, supports Provider selection, and keeps bounded multi-session
+history in account-scoped local browser storage. Model publishers cannot enable
+the widget by adding card markup; the live Provider mapping is authoritative.
+
 Fallback metadata can be updated without rewriting the card:
 
 ```bash

@@ -41,7 +41,10 @@ Revoke a credential when its purpose ends, its storage boundary changes, or it m
 
 ## Secure Git access
 
-Use `ssh.tensorplay.cn` for SSH Git and `mega.tensorplay.cn` for Web, API, and HTTPS Git. Upload only the `.pub` half of an SSH key:
+Use the dedicated `git.tensorplay.cn` data plane for HTTPS Git and
+`ssh.tensorplay.cn` for SSH Git. Existing `mega.tensorplay.cn` Git remotes
+remain compatible through a streamed fallback. Upload only the `.pub` half of
+an SSH key:
 
 ```bash
 ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519_mega

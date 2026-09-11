@@ -19,12 +19,14 @@ Repository type is selected at creation and is one of `model`, `dataset`, or `sp
 
 HTTPS works for public clone and bearer-backed credential helpers; SSH is the recommended interactive write transport after registering a public key:
 
-> The domains are different by design: use `mega.tensorplay.cn` for Web/API and
-> HTTPS Git, and `ssh.tensorplay.cn` for SSH Git.
+> Use `git.tensorplay.cn` directly for HTTPS Git and `ssh.tensorplay.cn` for SSH.
+> Existing `mega.tensorplay.cn` Git remotes remain compatible through a streamed
+> fallback, but new clones should use the dedicated Git data plane for performance.
 
 ```bash
-git clone https://mega.tensorplay.cn/mega/qwen-release.git
-git clone git@ssh.tensorplay.cn:mega/qwen-release.git
+curl -sSfL https://mega.tensorplay.cn/git-xet/install.sh | sh
+git clone https://git.tensorplay.cn/mega/qwen-release.git
+git clone git@ssh.tensorplay.cn:mega/qwen-release
 
 cd qwen-release
 git add .

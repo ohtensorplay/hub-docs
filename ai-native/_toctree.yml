@@ -7,6 +7,8 @@
 
 - title: Plugin and MCP
   sections:
+    - local: chat-plugins
+      title: Plugins in TensorPlayChat
     - local: using-the-plugin
       title: Use the MEGA Codex Plugin
     - local: mcp-workflows

@@ -36,7 +36,7 @@ the Hugging Face client ecosystem:
 | File upload and download | `hf upload`, `hf download`, `upload_folder`, and `snapshot_download` | `mega upload`, `mega download`, and `mega snapshot` |
 | Branches, tags, copy, and visibility | `hf repos` and `HfApi` repository methods | `mega repos branch`, `mega repos tag`, and `mega repos settings` |
 | Model loading | Transformers and other libraries built on `huggingface_hub` | `megatensors` for `.mega` artifacts |
-| Dataset loading | Datasets and other libraries built on `huggingface_hub` | `mega snapshot` or resolver URLs |
+| Dataset loading and derived Parquet | Datasets, Dataset Viewer metadata, `/api/datasets/{id}/parquet`, and range-capable Parquet shards | Data Studio, `mega snapshot`, or resolver URLs |
 | Mutable working data | `hf buckets` and compatible Bucket APIs | `mega buckets` and `mega://buckets/...` |
 
 Compatibility changes the transport and repository endpoint. It does not turn
@@ -128,9 +128,12 @@ Repository-card metadata is parsed in the Hugging Face YAML format.
 MEGA does not emulate every Hugging Face product. The `hf` compatibility write
 endpoint does not accept implicit pull-request commits; use native `mega upload
 --create-pr`, which creates a branch, performs the atomic upload, then opens a
-native pull request. Dataset viewing and SQL exploration
-are provided in MEGA's [Data Studio](/docs/hub/datasets-data-studio), rather
-than through Hugging Face Dataset Viewer conversion APIs. Bucket S3 access and
+native pull request. Dataset revisions are automatically converted for MEGA's
+[Data Studio](/docs/hub/datasets-data-studio), and compatible clients can read
+the generated Parquet map, shards, first rows, schema, size, statistics, and
+Croissant metadata. Server-side Dataset Viewer `rows`, `search`, and `filter`
+are not emulated; Data Studio provides interactive browsing over the indexed
+Parquet view instead. Bucket S3 access and
 managed Space volumes are available through MEGA's native public interfaces;
 see [Bucket S3 Gateway](/docs/hub/storage-buckets-s3) and
 [Space Storage](/docs/hub/spaces-storage). Use [Hub API](/docs/hub/api) and

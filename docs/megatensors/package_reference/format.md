@@ -78,6 +78,40 @@ The index records shard files and tensor placement:
 
 Runtime APIs resolve the index first, then open only the shards required by the requested tensors.
 
+## Hub repository metadata card
+
+Model repository pages summarize MEGA-native artifacts in a **MegaTensors**
+metadata card. The card inspects artifact data at the selected revision; it does
+not infer tensor counts or dtypes from the model name.
+
+The inspection entry point is deterministic:
+
+- A release with one `.mega` file inspects that file directly.
+- A release with multiple `.mega` shards inspects the first
+  `.mega.index.json` path in lexical order.
+- A multi-shard release without an index remains identifiable as MEGA, but the
+  page cannot validate aggregate tensor metadata.
+
+The rendered fields use these sources and fallbacks:
+
+| Card field | Artifact source | Fallback |
+| --- | --- | --- |
+| Model size | `summary.parameter_count` from a directly inspected `.mega` file | A parameter-size token in repository identity or tags; otherwise stored size |
+| Tensor type | Dtype counts in the inspected artifact, ordered by tensor count | A precision token in repository identity or tags; otherwise `Mixed` |
+| Tensors | `summary.tensor_count` | Hidden when detailed inspection is unavailable |
+| Files info | One file for a single artifact, or `summary.shard_count` for an index | Number of selected weight artifacts |
+| Verified | Successful bounded artifact inspection | Hidden when inspection has not completed or failed |
+
+Here **Verified** means that the Hub parsed and validated the artifact header or
+index contract. It does not assert publisher identity, model quality, or
+benchmark correctness. Use [Signing and Trust](/docs/hub/trust) for publisher
+provenance and [Model Evaluations](/docs/hub/model-evaluations) for benchmark
+evidence.
+
+The card's **Files info** control opens the inspected artifact when there is a
+stable file target. Otherwise it opens the selected repository tree so readers
+can inspect the release layout themselves.
+
 ## Integrity
 
 MEGA stores hashes for payload verification:

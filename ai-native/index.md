@@ -9,6 +9,7 @@ other supported coding agents.
 
 | You want to… | Use… |
 | --- | --- |
+| Add official or developer plugin packages to Web Chat | [Plugins in TensorPlayChat](/docs/ai-native/chat-plugins) |
 | Connect Codex to MEGA and install the bundled workflow guidance | The [MEGA Codex plugin](/docs/ai-native/install) |
 | Add only selected, portable MEGA workflow Skills | [MEGA Agent Skills](/docs/ai-native/skills) |
 
@@ -29,6 +30,7 @@ You approve access through the normal MEGA authorization flow. Only grant the
 permissions needed for the task, and review the target before authorizing a
 write or deletion.
 
-Start with [Install the MEGA Codex Plugin](/docs/ai-native/install), then see
+For Web Chat, start with [Plugins in TensorPlayChat](/docs/ai-native/chat-plugins).
+For Codex, start with [Install the MEGA Codex Plugin](/docs/ai-native/install), then see
 [MCP Workflows in Codex](/docs/ai-native/mcp-workflows) and the
 [MEGA Skills Catalog](/docs/ai-native/skills-catalog).

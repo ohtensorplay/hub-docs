@@ -4,6 +4,21 @@ Use Xet through MEGA's ordinary repository tools. For most workflows, select a
 repository, keep the source tree stable while it transfers, and use a commit or
 tag when the release is ready.
 
+## Install Git-Xet
+
+Install MEGA's Git-Xet build from the stable installer endpoint:
+
+```bash
+curl -sSfL https://mega.tensorplay.cn/git-xet/install.sh | sh
+git xet --version
+```
+
+The installer registers `xet` for uploads and `xet-download` for downloads.
+Both operations transfer large-file bytes directly between Git-Xet and the Xet
+CAS returned by MEGA; the Hub and Git Gateway only negotiate scoped actions and
+tokens. Older Git-Xet clients remain compatible and use the signed basic
+download path when they do not advertise `xet-download`.
+
 ## Upload a large release tree
 
 Use the resumable uploader for large directories:
@@ -33,7 +48,7 @@ files or small changes, use the repository commands in
 Standard Git repository workflows continue to work for MEGA repositories:
 
 ```bash
-git clone https://mega.tensorplay.cn/OWNER/REPOSITORY.git
+git clone https://git.tensorplay.cn/OWNER/REPOSITORY.git
 cd REPOSITORY
 git add .
 git commit -m "Publish release"

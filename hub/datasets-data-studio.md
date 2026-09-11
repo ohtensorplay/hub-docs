@@ -8,8 +8,10 @@ the Data Studio Agent for a selected configuration and split.
 
 Use Data Studio to answer practical questions about a dataset revision:
 
-- inspect its schema, sample rows, and column statistics in Dataset Viewer;
+- inspect paginated rows, search and filter the indexed split, and open a
+  durable row link in Dataset Viewer;
 - use SQL Console for a read-only filter, aggregation, or quality check;
+- share or embed SQL and download a result as CSV or Parquet;
 - save a useful query for your own later review;
 - ask the Data Studio Agent to explain the selected schema, preview values,
   data-quality questions, or suggest a SQL query.

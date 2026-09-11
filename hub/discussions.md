@@ -77,6 +77,13 @@ The proposal records the source and target revisions at creation. The CLI identi
 
 ## Review and merge
 
+In the browser, open **Community → Pull requests**, select a proposal, review its
+commits and file diff, and use the thread for review comments. Personal owners,
+or organization members with `admin` or `write` access, receive an Inbox review
+request when another account opens a PR. If discussion-activity email is enabled
+in notification settings, MEGA also queues a dedicated **Pull Request review
+requested** email whose **Review Pull Request** action links to the same review.
+
 Inspect the commits and file changes carried by a proposal:
 
 ```bash

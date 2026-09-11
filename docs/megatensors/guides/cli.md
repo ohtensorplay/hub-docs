@@ -147,14 +147,17 @@ The create command reveals a generated signing secret once. See [Webhooks](/docs
 
 ## Git, SSH, and GPG smoke test
 
-MEGA uses different public hosts: Web/API and HTTPS Git use
-`mega.tensorplay.cn`, while SSH Git uses `ssh.tensorplay.cn`.
+MEGA publishes Web/API URLs on `mega.tensorplay.cn`, HTTPS Git directly on
+`git.tensorplay.cn`, and SSH Git on `ssh.tensorplay.cn`. Existing Hub-host Git
+remotes continue to work through a streamed compatibility fallback.
 
 ```bash
 ssh-keygen -t ed25519 -C "$USER@$(hostname)" -f ~/.ssh/id_ed25519_mega
 mega auth keys add ~/.ssh/id_ed25519_mega.pub --name workstation
+curl -sSfL https://mega.tensorplay.cn/git-xet/install.sh | sh
+git clone https://git.tensorplay.cn/OWNER/REPOSITORY.git
 ssh -T -i ~/.ssh/id_ed25519_mega git@ssh.tensorplay.cn
-git clone git@ssh.tensorplay.cn:OWNER/REPOSITORY.git
+git clone git@ssh.tensorplay.cn:OWNER/REPOSITORY
 ```
 
 Register and exercise a signing key whose email matches the MEGA account:
